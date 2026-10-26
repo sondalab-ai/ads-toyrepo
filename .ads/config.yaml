@@ -1,0 +1,23 @@
+version: 1
+trunk: main
+checks:
+  test_runner: "go test {dirs}"
+  test_paths: ["**/*_test.go"]
+  test_support_paths: ["**/testdata/**"]
+  by_risk:
+    trivial: [test]
+  commands:
+    test: "go test ./..."
+risk_rules:
+  - paths: ["go.mod", "go.sum", "vendor/**", "package.json", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "pyproject.toml", "setup.cfg", "tox.ini", "pytest.ini", "Makefile"]
+    risk: high
+sandbox:
+  driver: none
+  env_allow: [GOROOT, GOPATH, GOMODCACHE, GOCACHE, GOTOOLCHAIN, GOFLAGS, GOPROXY]
+adapters:
+  fake: {kind: fake}
+roles:
+  test_author: fake
+  implementer: fake
+  reviewer: fake
+  arbiter: fake
