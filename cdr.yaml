@@ -1,0 +1,23 @@
+id: CDR-0001
+type: bug
+title: 'T01: Last returns one entry too few'
+intent: |
+  Last(entries, n) must return the last n entries. It returns n-1.
+rationale: Statements show one entry too few.
+scope:
+  - ledger
+constraints: []
+acceptance_criteria:
+  - Last(entries, 2) returns the last two entries, oldest first
+  - Last(entries, n) returns the last n entries, oldest first, for any n from 1 to len(entries)
+  - Last with n greater than len(entries) returns all entries
+  - Last with n of 0 or less returns no entries
+risk:
+  declared: low
+requires: []
+relates_to: []
+side_effects:
+  - none
+rollback_plan: Revert the commit.
+author: marcello.barile@gmail.com
+created_at: "2026-10-27T07:14:31.864Z"
