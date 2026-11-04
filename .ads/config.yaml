@@ -16,8 +16,10 @@ sandbox:
   env_allow: [GOROOT, GOPATH, GOMODCACHE, GOCACHE, GOTOOLCHAIN, GOFLAGS, GOPROXY]
 adapters:
   fake: {kind: fake}
+  claude: {kind: claude, model: claude-opus-5-5}
+  claude-review: {kind: claude, model: claude-sonnet-5-5}
 roles:
-  test_author: fake
-  implementer: fake
-  reviewer: fake
-  arbiter: fake
+  test_author: claude
+  implementer: claude
+  reviewer: claude-review
+  arbiter: claude-review
