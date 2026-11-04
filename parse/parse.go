@@ -23,18 +23,31 @@ func ParseAmount(s string) (int64, error) {
 	if hasDot && (!isDigits(frac) || len(frac) > 2) {
 		return 0, fmt.Errorf("parse: invalid amount %q", orig)
 	}
-	w, err := strconv.ParseInt(whole, 10, 64)
-	if err != nil || w > (math.MaxInt64-99)/100 {
+	// Compute the magnitude in cents as uint64 so the full int64 range,
+	// including math.MinInt64, can be checked exactly.
+	limit := uint64(math.MaxInt64)
+	if neg {
+		limit = uint64(math.MaxInt64) + 1
+	}
+	w, err := strconv.ParseUint(whole, 10, 64)
+	if err != nil || w > limit/100 {
 		return 0, fmt.Errorf("parse: amount %q out of range", orig)
 	}
-	var f int64
+	var f uint64
 	if frac != "" {
 		if len(frac) == 1 {
 			frac += "0"
 		}
-		f, _ = strconv.ParseInt(frac, 10, 64)
+		f, _ = strconv.ParseUint(frac, 10, 64)
 	}
-	cents := w*100 + f
+	mag := w * 100
+	if f > limit-mag {
+		return 0, fmt.Errorf("parse: amount %q out of range", orig)
+	}
+	mag += f
+	// For mag == 1<<63 (only reachable when neg), the conversion yields
+	// math.MinInt64 and negation leaves it unchanged, which is correct.
+	cents := int64(mag)
 	if neg {
 		cents = -cents
 	}
