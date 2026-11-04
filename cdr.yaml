@@ -1,0 +1,27 @@
+id: CDR-0002
+type: bug
+title: ParseAmount rejects amounts that are not numbers
+intent: Make parse.ParseAmount return an error for an empty amount and for any amount that is not [-]digits[.digits] with at most two decimals, instead of returning a wrong value with a nil error. ParseLine must pass that error on.
+rationale: ParseAmount ignores the error from strconv.ParseInt, so "abc" gives 0, "12.3x" gives 1200 and "" gives 0, all with a nil error.
+scope:
+  - parse/**
+constraints:
+  - Valid amounts such as "12.34", "-5" and "0.5" must keep their current values.
+  - Do not change the signature of ParseAmount or ParseLine.
+acceptance_criteria:
+  - ParseAmount("abc") returns a non-nil error.
+  - ParseAmount("12.3x") returns a non-nil error.
+  - ParseAmount("") returns a non-nil error.
+  - ParseAmount with more than two decimals (for example "1.234") returns a non-nil error.
+  - ParseAmount("12.34") returns 1234 and nil, ParseAmount("-5") returns -500 and nil, and ParseAmount("0.5") returns 50 and nil.
+  - ParseLine returns an error when the amount field is invalid.
+risk:
+  declared: low
+requires: []
+relates_to:
+  - github:sondalab-ai/ads-toyrepo#1
+side_effects:
+  - none
+rollback_plan: Revert the commit. The change is confined to the parse package.
+author: assessor
+created_at: "2026-11-04T11:13:43.053Z"
