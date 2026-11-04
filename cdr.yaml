@@ -1,0 +1,25 @@
+id: CDR-0005
+type: feature
+title: Add a Makefile with test and vet targets
+intent: The repository has no Makefile. Add one at the root with `test` (go test ./...) and `vet` (go vet ./...) targets, and make the default target run both.
+rationale: Requested in https://github.com/sondalab-ai/ads-toyrepo/issues/5
+scope:
+  - Makefile
+constraints: []
+acceptance_criteria:
+  - A file named Makefile exists at the repository root.
+  - '`make -n test` prints `go test ./...`.'
+  - '`make -n vet` prints `go vet ./...`.'
+  - '`make -n` with no target prints both `go vet ./...` and `go test ./...`.'
+  - The test and vet targets are declared .PHONY.
+risk:
+  declared: trivial
+requires: []
+relates_to:
+  - github:sondalab-ai/ads-toyrepo#5
+  - CDR-0004
+side_effects:
+  - none
+rollback_plan: Delete the Makefile.
+author: assessor
+created_at: "2026-11-04T21:34:59.748Z"
