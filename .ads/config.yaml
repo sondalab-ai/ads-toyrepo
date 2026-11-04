@@ -23,3 +23,11 @@ roles:
   implementer: claude
   reviewer: claude-review
   arbiter: claude-review
+  assessor: claude-review
+budgets:
+  default: {usd: 2}
+  trivial: {usd: 1.5}
+  low: {usd: 2}
+  medium: {usd: 3}
+  high: {usd: 3}
+  critical: {usd: 3}
