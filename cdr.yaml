@@ -1,0 +1,27 @@
+id: CDR-0003
+type: bug
+title: ParseAmount rejects amounts that overflow int64 minor units
+intent: ParseAmount must return an error for syntactically valid amounts whose value in minor units (cents) does not fit in int64, instead of silently overflowing.
+rationale: 'A follow-up from issue #1 noted a range check was proposed but was out of scope there. Without it, very large whole parts wrap around and yield wrong amounts.'
+scope:
+  - '**/*.go'
+constraints:
+  - Do not change behavior for amounts that fit in int64 cents.
+  - Keep existing error behavior for empty or malformed input and for more than two decimals.
+  - Only touch the file defining ParseAmount and its tests.
+acceptance_criteria:
+  - ParseAmount("92233720368547758.07") returns 9223372036854775807 with no error.
+  - ParseAmount("92233720368547758.08") returns an error.
+  - ParseAmount("99999999999999999999") returns an error.
+  - 'ParseAmount("-92233720368547758.08") is handled consistently: either accepted as MinInt64 or rejected, and the test documents which.'
+  - Existing ParseAmount tests for valid and malformed input still pass.
+risk:
+  declared: low
+requires: []
+relates_to:
+  - github:sondalab-ai/ads-toyrepo#3
+side_effects:
+  - none
+rollback_plan: Revert the commit; ParseAmount returns to its previous behavior without the range check.
+author: assessor
+created_at: "2026-11-04T11:37:29.856Z"
