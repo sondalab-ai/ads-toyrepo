@@ -13,6 +13,7 @@ risk_rules:
     risk: high
 sandbox:
   driver: none
+  path: [/opt/homebrew/bin, /usr/bin, /bin]
   env_allow: [GOROOT, GOPATH, GOMODCACHE, GOCACHE, GOTOOLCHAIN, GOFLAGS, GOPROXY]
 adapters:
   fake: {kind: fake}
