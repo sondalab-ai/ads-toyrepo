@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 
-.PHONY: all test vet
+.PHONY: all test vet cover
 
 all: test vet
 
@@ -9,3 +9,6 @@ test:
 
 vet:
 	go vet ./...
+
+cover:
+	go test -cover ./...
