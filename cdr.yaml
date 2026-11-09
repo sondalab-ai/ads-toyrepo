@@ -1,0 +1,23 @@
+id: CDR-0007
+type: feature
+title: Add a cover target to the Makefile
+intent: The Makefile has only all, test and vet targets. Add a `cover` target that runs `go test -cover ./...`, declare it in .PHONY, and leave `all` as `test vet`.
+rationale: Requested in https://github.com/sondalab-ai/ads-toyrepo/issues/13
+scope:
+  - Makefile
+constraints: []
+acceptance_criteria:
+  - '`make cover` runs `go test -cover ./...` and exits 0 when the tests pass'
+  - The .PHONY line in the Makefile includes `cover`
+  - The `all` target still depends only on `test` and `vet`
+  - '`make -n cover` prints `go test -cover ./...`'
+risk:
+  declared: trivial
+requires: []
+relates_to:
+  - github:sondalab-ai/ads-toyrepo#13
+side_effects:
+  - none
+rollback_plan: Revert the commit; remove the cover target and its .PHONY entry from the Makefile.
+author: assessor
+created_at: "2026-11-09T08:44:46.516Z"
