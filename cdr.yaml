@@ -1,0 +1,21 @@
+id: CDR-0009
+type: revert
+title: 'Revert CDR-0008: README: add step 4 to ask ads for a fix'
+intent: Undo the change of CDR-0008 (commit a61f5bb0479395264dda1fe0ef1d341c519f339a).
+rationale: it was just a test
+scope:
+  - README.md
+constraints:
+  - Change only what the inverse of a61f5bb0479395264dda1fe0ef1d341c519f339a changes.
+acceptance_criteria:
+  - The paths changed by a61f5bb0479395264dda1fe0ef1d341c519f339a hold their content from before a61f5bb0479395264dda1fe0ef1d341c519f339a, merged with later changes.
+risk:
+  declared: trivial
+requires: []
+relates_to: []
+side_effects:
+  - none
+rollback_plan: Revert this CDR with ads revert.
+author: marcello.barile@gmail.com
+created_at: "2026-11-14T10:56:27.344Z"
+supersedes: CDR-0008
