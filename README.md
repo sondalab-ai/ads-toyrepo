@@ -9,5 +9,6 @@ It is a copy of `bench/toyrepo` from `sondalab-ai/agentic-dev-system`. The `ads`
 1. `git clone https://github.com/sondalab-ai/ads-toyrepo.git && cd ads-toyrepo`
 2. `ads init`: the onboarding wizard. It sets up the signing key, ssh-agent, the hooks, and the GitHub rulesets.
 3. `ads doctor`: checks the setup and changes nothing.
+4. Open Claude Code in the repository and type `fix #<n>`, where `<n>` is a GitHub issue number.
 
 `go test ./...` must pass.
